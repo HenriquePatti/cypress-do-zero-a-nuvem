@@ -18,22 +18,30 @@ describe("Central de Atendimento ao Cliente TAT", () => {
     cy.get(".success").should("be.visible");
   });
 
-  it("exibe mensagem de erro ao submeter o formulário com um email com formatação inválida", () => {
-    const longText = Cypress._.repeat("QA teste plataforma CAC-TAT ", 15);
-    const invalidEmail = [
-      "cremoso-pompeugmail.com",
-      "cremoso pompeu@gmail.com",
-      "cremoso-pompeu@gmailcom",
-    ];
+  const longText = Cypress._.repeat("QA teste plataforma CAC-TAT ", 15);
+  const invalidEmails = [
+    "cremoso-pompeugmail.com",
+    "cremoso  pompeu@gmail.com",
+    "cremoso-pompeu@gmailcom",
+    "cremoso-pompeu@ gmailcom",
+  ];
 
-    invalidEmail.forEach((mail) => {
+  invalidEmails.forEach((email) => {
+    it(`exibe mensagem de erro ao submeter e-mails inválidos ${email}`, () => {
       cy.get("#firstName").type("Cremoso");
       cy.get("#lastName").type("Pompeu");
-      cy.get("#email").type(mail);
+      cy.get("#email").type(email);
       cy.get("#open-text-area").type(longText, { delay: 0 });
       cy.get('button[type="submit"]').click();
 
-      cy.get(".error").should("be.visible");
+      cy.get(".error", { timeout: 10000 }).should("be.visible");
+      cy.get("body").then(($body) => {
+        if ($body.find(".success").length > 0) {
+          cy.get(".success").should("not.be.visible");
+        }
+      });
+      cy.get("#email").clear();
     });
   });
+  
 });
