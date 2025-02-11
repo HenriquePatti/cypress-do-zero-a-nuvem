@@ -44,7 +44,7 @@ describe("Central de Atendimento ao Cliente TAT", () => {
     });
   });
 
-  it.only('mantém o campo de telefone vazio ao inserir valores não numéricos', () => {
+  it('mantém o campo de telefone vazio ao inserir valores não numéricos', () => {
     cy.get("#phone")
       .type("`˜!@#$%ˆ&* ()_-+={[}];:'<,>.?/abcA")
       .should('be.empty')
