@@ -43,5 +43,11 @@ describe("Central de Atendimento ao Cliente TAT", () => {
       cy.get("#email").clear();
     });
   });
+
+  it.only('mantém o campo de telefone vazio ao inserir valores não numéricos', () => {
+    cy.get("#phone")
+      .type("`˜!@#$%ˆ&* ()_-+={[}];:'<,>.?/abcA")
+      .should('be.empty')
+  });
   
 });
