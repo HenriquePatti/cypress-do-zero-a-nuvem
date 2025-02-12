@@ -50,4 +50,19 @@ describe("Central de Atendimento ao Cliente TAT", () => {
       .should('be.empty')
   });
   
+  it('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário',()=>{
+    const longText = Cypress._.repeat("QA teste plataforma CAC-TAT ", 15);
+    cy.get("#firstName").type("Pomposo");
+    cy.get("#lastName").type("Silva");
+    cy.get("#email").type("pomposo-silva@gmail.com");
+    cy.get('#phone').should('not.have.attr', 'required')
+    cy.get('#phone-checkbox').check()
+    cy.get("#open-text-area").type(longText, { delay: 0 });
+    cy.get('button[type="submit"]').click();
+
+    cy.get('#phone').should('have.value', '')
+    cy.get('#phone').should('have.attr', 'required')
+    cy.get(".error").should("be.visible");
+  })
+
 });
