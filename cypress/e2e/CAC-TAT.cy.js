@@ -56,13 +56,41 @@ describe("Central de Atendimento ao Cliente TAT", () => {
     cy.get("#lastName").type("Silva");
     cy.get("#email").type("pomposo-silva@gmail.com");
     cy.get('#phone').should('not.have.attr', 'required')
-    cy.get('#phone-checkbox').check()
+    cy.get('#phone-checkbox').check();
     cy.get("#open-text-area").type(longText, { delay: 0 });
     cy.get('button[type="submit"]').click();
 
     cy.get('#phone').should('have.value', '')
     cy.get('#phone').should('have.attr', 'required')
     cy.get(".error").should("be.visible");
+  })
+
+  it('preenche e limpa os campos nome, sobrenome, email e telefone', ()=>{
+    cy.get("#firstName")
+      .type("Pomposo")
+      .should('have.value', 'Pomposo');
+    cy.get("#lastName")
+      .type("Silva")
+      .should('have.value', 'Silva');
+    cy.get("#email")
+      .type("pomposo-silva@gmail.com")
+      .should('have.value', 'pomposo-silva@gmail.com');
+    cy.get('#phone')
+      .type('11987654321')
+      .should('have.value', '11987654321')
+     
+    cy.get("#firstName")
+      .clear()
+      .should('be.empty');
+    cy.get("#lastName")
+      .clear()
+      .should('be.empty');
+    cy.get("#email")
+      .clear()
+      .should('be.empty');
+    cy.get('#phone')
+      .clear()
+      .should('be.empty')
   })
 
 });
