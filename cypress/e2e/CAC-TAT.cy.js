@@ -21,7 +21,7 @@ describe("Central de Atendimento ao Cliente TAT", () => {
   const longText = Cypress._.repeat("QA teste plataforma CAC-TAT ", 15);
   const invalidEmails = [
     "cremoso-pompeugmail.com",
-    "cremoso  pompeu@gmail.com",
+    "cremoso pompeu@gmail.com",
     "cremoso-pompeu@gmailcom",
     "cremoso-pompeu@ gmailcom",
   ];
@@ -41,6 +41,7 @@ describe("Central de Atendimento ao Cliente TAT", () => {
         }
       });
       cy.get("#email").clear();
+      cy.reload()
     });
   });
 
@@ -107,4 +108,10 @@ describe("Central de Atendimento ao Cliente TAT", () => {
         
   })
 
+  it('seleciona um produto (YouTube) por seu texto', ()=> {
+    cy.get('#product')
+      .select('YouTube')
+      .should('have.value', 'youtube')
+   
+  })
 });
