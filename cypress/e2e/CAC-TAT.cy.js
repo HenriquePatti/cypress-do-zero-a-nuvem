@@ -126,5 +126,11 @@ describe("Central de Atendimento ao Cliente TAT", () => {
     .select(1)
     .should('have.value', 'blog')
   })
+
+  it('marca o tipo de atendimento "Feedback"',()=> {
+    cy.get('[type="radio"]')
+      .check('feedback')
+      .should('have.value', 'feedback')
+  })
   
 });
