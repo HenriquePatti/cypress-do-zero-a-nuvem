@@ -132,5 +132,17 @@ describe("Central de Atendimento ao Cliente TAT", () => {
       .check('feedback')
       .should('have.value', 'feedback')
   })
+
+  it('seleciona e verifica o valor de cada tipo de atendimento', ()=> {
+    const valuesRadio = [ 'ajuda', 'elogio', 'feedback']
+    cy.get('[type="radio"]')
+      .should('have.length', valuesRadio.length)
+      .each( ($radio, index)=> {
+        cy.wrap($radio)
+          .check()
+          .should('be.checked')
+          .and('have.value', valuesRadio[index])
+      })
+  })
   
-});
+})
