@@ -144,5 +144,19 @@ describe("Central de Atendimento ao Cliente TAT", () => {
           .and('have.value', valuesRadio[index])
       })
   })
-  
+
+  it('marca ambos checkboxes, depois desmarca o último', ()=> {
+    cy.get('[type="checkbox"]').as('checkbox')
+      .each( ($check)=> {
+        cy.wrap($check)
+          .check()
+          .should('be.checked')
+      })
+    
+    cy.get('@checkbox')
+      .last()
+      .uncheck()
+      .should('not.be.checked')
+  })
+     
 })
