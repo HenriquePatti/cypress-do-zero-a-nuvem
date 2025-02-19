@@ -142,5 +142,14 @@ describe("Central de Atendimento ao Cliente TAT", () => {
   it("seleciona um arquivo simulando um drag-and-drop", () => {
     cy.get("#file-upload").selectFile("cypress/fixtures/example.json", { action: 'drag-drop' })
   });
+
+  it('seleciona um arquivo utilizando uma fixture para a qual foi dada um alias', ()=> {
+    cy.fixture("example.json", null).as('dataFixture')
+    cy.get("#file-upload")
+      .selectFile('@dataFixture')
+      .then((data)=>{
+        expect(data[0].files[0].name).to.equal('example.json')
+      })
+  })
   
 });
