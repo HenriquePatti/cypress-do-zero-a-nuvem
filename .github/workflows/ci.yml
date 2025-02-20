@@ -1,10 +1,44 @@
 name: End-to-end tests
-on: push
+
+on: 
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
 jobs:
   cypress-run:
     runs-on: ubuntu-22.04
+
     steps:
-      - name: Checkout
+      - name: Checkout código
         uses: actions/checkout@v4
-      - name: Cypress run
+
+      - name: Configurar Node.js v20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Rodar Cypress (Headless)
         uses: cypress-io/github-action@v6
+        with:
+          browser: chrome
+          headless: true
+
+      - name: Salvar artefatos em caso de falha
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-artifacts
+          path: |
+            cypress/screenshots
+            cypress/videos
+          retention-days: 7
