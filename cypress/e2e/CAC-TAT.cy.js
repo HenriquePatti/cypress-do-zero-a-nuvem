@@ -200,4 +200,14 @@ describe("Central de Atendimento ao Cliente TAT", () => {
 
   });
 
+  it('revela imagem oculta do gato', ()=> {
+    cy.get('#cat').as('imageCat'); // Arrange
+    cy.get('@imageCat').should('not.be.visible');
+
+    cy.get('@imageCat').invoke('show'); // Act
+
+    cy.get('@imageCat').should('be.visible'); // Assert
+
+  })
+
 });
