@@ -178,4 +178,14 @@ describe("Central de Atendimento ao Cliente TAT", () => {
     cy.validateAlertVisibility(".success");
     cy.validateAlertVisibility(".error");
   });
+
+  it("preenche o campo da área de texto usando o comando invoke.", () => {
+    const textDescription = Cypress._.repeat("QA TESTE ", 3);
+
+    cy.get("#open-text-area").as('description')
+      .invoke("val", textDescription)
+      
+    cy.get('@description').should("have.value", textDescription);
+  });
+  
 });
