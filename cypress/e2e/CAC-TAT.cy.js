@@ -174,7 +174,7 @@ describe("Central de Atendimento ao Cliente TAT", () => {
       });
   });
 
-  it.only("exibe e oculta as mensagens de sucesso e erro usando .invoke()", () => {
+  it("exibe e oculta as mensagens de sucesso e erro usando .invoke()", () => {
     cy.validateAlertVisibility(".success");
     cy.validateAlertVisibility(".error");
   });
