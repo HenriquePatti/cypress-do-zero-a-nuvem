@@ -36,3 +36,14 @@ Cypress.Commands.add('fillMandatoryFieldsAndSubmit', ( dataField = {
     cy.get("#open-text-area").type(dataField.description, { delay: 0 })
     cy.contains('button', 'Enviar').click();
 })
+
+Cypress.Commands.add('validateAlertVisibility', (element)=> {
+    cy.get(element)
+        .invoke('show')
+        .should('be.visible')
+    
+        cy.get(element)
+        .invoke('hide')
+        .should('not.be.visible')
+        
+})
